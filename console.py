@@ -121,6 +121,24 @@ class HBNBCommand(cmd.Cmd):
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        else:
+            kwargs = {}
+            for arg in args.split():
+                # verify that it contain '='
+                if "=" in arg: 
+                    key, value = arg.split("=")
+                    if value[0] == '"' and value[-1] == '"':
+                        # delete double quote (1:-1)
+                        value = value[1:-1].replace("_", " ") \
+                            .replace('\\', '"')
+                    elif "." in value:
+                        value = float(value)
+                    else:
+                        try:
+                            value = int(value)
+                        except Exception as e:
+                            continue
+                    kwargs[key] = value
         new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
