@@ -54,5 +54,6 @@ class FileStorage:
         Deletes obj from __objects if it's inside
         """
         if obj is not None:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            FileStorage.__objects.pop(key, None)
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
