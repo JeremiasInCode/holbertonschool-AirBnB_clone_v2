@@ -118,19 +118,17 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args.split()[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         else:
             kwargs = {}
             for arg in args.split():
-                # verify that it contain '='
-                if "=" in arg: 
+                if "=" in arg:
                     key, value = arg.split("=")
                     if value[0] == '"' and value[-1] == '"':
-                        # delete double quote (1:-1)
                         value = value[1:-1].replace("_", " ") \
-                            .replace('\\', '"')
+                            .replace('\\"', '"')
                     elif "." in value:
                         value = float(value)
                     else:
