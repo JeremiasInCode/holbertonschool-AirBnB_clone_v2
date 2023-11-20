@@ -139,7 +139,9 @@ class HBNBCommand(cmd.Cmd):
                         except Exception as e:
                             continue
                     kwargs[key] = value
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[args.split()[0]]()
+        new_instance.__dict__.update(kwargs)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
         storage.save()
