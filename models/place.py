@@ -63,5 +63,6 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, amenity):
             """ Add Amenity object to amenity_ids """
+            from models.amenity import Amenity
             if isinstance(amenity, Amenity):
                 self.amenity_ids.append(amenity.id)
