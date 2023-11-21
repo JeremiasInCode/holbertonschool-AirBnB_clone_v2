@@ -2,8 +2,7 @@
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import backref
+from sqlalchemy.orm import relationship, backref
 from os import getenv
 
 
@@ -11,12 +10,12 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade='all, delete-orphan')
+    cities = relationship("City", backref="state",
+                          cascade='all, delete-orphan')
 
     @property
     def cities(self):
-        """ Returns the list of City instances
-        with state_id equals to the current State.id """
+        """Returns the list of City instances"""
         from models.city import City
         from models import storage
         listed = []
