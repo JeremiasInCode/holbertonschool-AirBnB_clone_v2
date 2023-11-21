@@ -5,11 +5,14 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Table, Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
+from os import getenv
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
+
     __tablename__ = 'places'
+
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -20,7 +23,6 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    amenity_ids = []
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship("Review", cascade="all, delete-orphan",
                                backref='places')
