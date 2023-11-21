@@ -126,7 +126,8 @@ class HBNBCommand(cmd.Cmd):
                 if "=" in arg:
                     key, value = arg.split("=")
                     if value[0] == '"' and value[-1] == '"':
-                        value = value[1:-1].replace("_", " ").replace('\\"', '"')
+                        value = value[1:-1].replace("_", " ") \
+                            .replace('\\"', '"')
                     elif "." in value:
                         value = float(value)
                     else:
@@ -135,8 +136,7 @@ class HBNBCommand(cmd.Cmd):
                         except Exception as e:
                             continue
                     kwargs[key] = value
-        class_name = args.split()[0]
-        new_instance = HBNBCommand.classes[class_name]()
+        new_instance = HBNBCommand.classes[args.split()[0]]()
         new_instance.__dict__.update(kwargs)
         storage.new(new_instance)
         storage.save()
