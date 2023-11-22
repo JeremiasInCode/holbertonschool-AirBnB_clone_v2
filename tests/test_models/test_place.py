@@ -4,7 +4,9 @@ from models.place import Place
 
 
 class test_place(test_basemodel):
+    """ test_place class """
     def __init__(self, *args, **kwargs):
+        """ __init__ method """
         super().__init__(*args, **kwargs)
         self.name = "Place"
         self.value = Place
