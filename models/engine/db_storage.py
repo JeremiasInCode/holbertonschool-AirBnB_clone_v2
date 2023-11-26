@@ -4,6 +4,7 @@ from sqlalchemy import create_engine, text
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+
 class DBStorage():
     """ DBStorage class """
     __engine = None
@@ -15,8 +16,10 @@ class DBStorage():
         password = environ.get('HBNB_MYSQL_PWD')
         host = environ.get('HBNB_MYSQL_HOST')
         db = environ.get('HBNB_MYSQL_DB')
-        self.__engine = create_engine(f'mysql+mysqldb://{user}:{password}@{host}/{db}',pool_pre_ping=True)
-        
+        self.__engine = create_engine(
+            f'mysql+mysqldb://{user}:{password}@{host}/{db}',
+            pool_pre_ping=True)
+
     def all(self, cls=None):
         """ Returns a dict of the specified cls """
         from models.user import User
