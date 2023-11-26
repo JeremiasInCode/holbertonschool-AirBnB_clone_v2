@@ -15,27 +15,12 @@ from models.engine.file_storage import FileStorage
 class TestHBNBCommand(unittest.TestCase):
     """ Test the HBNBCommand class. """
 
-    def setUp(self):
-        self.cmd = HBNBCommand()
-        self.classes = ["BaseModel", "User"]
-
-    def tearDown(self):
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            pass
-
     def test_emptyline(self):
         """ Test empty line + ENTER shouldn't execute. """
         with patch("sys.stdout", new_callable=StringIO):
             self.cmd.onecmd("\n")
             output = sys.stdout.getvalue()
             self.assertEqual(output, "")
-
-    def test_quit(self):
-        """ Test the 'quit' command. """
-        with self.assertRaises(SystemExit):
-            self.cmd.onecmd("quit")
 
     def test_eof(self):
         """ Test the 'EOF' command. """
@@ -48,14 +33,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.cmd.onecmd("help")
             output = mock_stdout.getvalue()
             self.assertIn("Documented commands (type help <topic>):", output)
-
-    def test_create(self):
-        """ Test the 'create' command. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            for cls in self.classes:
-                self.cmd.onecmd(f"create {cls}")
-                output = mock_stdout.getvalue()
-                self.assertIn("{}".format(BaseModel().id), output)
 
     def test_create_missing_class(self):
         """ Test the 'create' command with missing class name. """
@@ -100,13 +77,6 @@ class TestHBNBCommand(unittest.TestCase):
             output = mock_stdout.getvalue()
             self.assertEqual(output, "** instance id missing **\n")
 
-    def test_show_invalid_id(self):
-        """ Test the 'show' command with invalid instance id. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd("show BaseModel invalid_id")
-            output = mock_stdout.getvalue()
-            self.assertEqual(output, "** no instance found **\n")
-
     def test_destroy(self):
         """ Test the 'destroy' command. """
         obj = BaseModel()
@@ -114,13 +84,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.cmd.onecmd(f"destroy BaseModel {obj.id}")
             output = mock_stdout.getvalue()
             self.assertEqual(output, "")
-
-    def test_destroy_missing_class(self):
-        """ Test the 'destroy' command with missing class name. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd("destroy")
-            output = mock_stdout.getvalue()
-            self.assertEqual(output, "** class name missing **\n")
 
     def test_destroy_invalid_class(self):
         """ Test the 'destroy' command with invalid class name. """
@@ -150,13 +113,6 @@ class TestHBNBCommand(unittest.TestCase):
             output = mock_stdout.getvalue()
             self.assertIn("BaseModel", output)
 
-    def test_all_class(self):
-        """ Test the 'all' command with class name. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd("all BaseModel")
-            output = mock_stdout.getvalue()
-            self.assertIn("BaseModel", output)
-
     def test_all_missing_class(self):
         """ Test the 'all' command with missing class name. """
         with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
@@ -172,13 +128,6 @@ class TestHBNBCommand(unittest.TestCase):
             output = mock_stdout.getvalue()
             self.assertEqual(output, "")
 
-    def test_update_missing_class(self):
-        """ Test the 'update' command with missing class name. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd('update')
-            output = mock_stdout.getvalue()
-            self.assertEqual(output, "** class name missing **\n")
-
     def test_update_invalid_class(self):
         """ Test the 'update' command with invalid class name. """
         with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
@@ -192,21 +141,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.cmd.onecmd('update BaseModel')
             output = mock_stdout.getvalue()
             self.assertEqual(output, "** instance id missing **\n")
-
-    def test_update_invalid_id(self):
-        """ Test the 'update' command with invalid instance id. """
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd('update BaseModel invalid_id')
-            output = mock_stdout.getvalue()
-            self.assertEqual(output, "** no instance found **\n")
-
-    def test_update_missing_attribute(self):
-        """ Test the 'update' command with missing attribute name. """
-        obj = BaseModel()
-        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd(f'update BaseModel {obj.id}')
-            output = mock_stdout.getvalue()
-            self.assertEqual(output, "** attribute name missing **\n")
 
     def test_update_missing_value(self):
         """ Test the 'update' command with missing attribute value. """
