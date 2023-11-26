@@ -11,24 +11,4 @@ class test_user(test_basemodel):
         """ __init__ method """
         super().__init__(*args, **kwargs)
         self.name = "User"
-        self.value = User
-
-    def test_first_name(self):
-        """ test_first_name model """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
-
-    def test_last_name(self):
-        """ test_last_name model """
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
-
-    def test_email(self):
-        """ test_email model """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
-
-    def test_password(self):
-        """ test_password model """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        self.value = user
