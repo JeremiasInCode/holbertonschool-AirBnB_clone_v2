@@ -25,7 +25,7 @@ def display_text_c(text):
     return f"C {text}"
 
 
-@app.route("/python", defaults={'text': 'is cool'})
+@app.route("/python")
 @app.route("/python/<text>")
 def display_text_python(text):
     """Returns a text"""
@@ -35,15 +35,9 @@ def display_text_python(text):
 
 @app.route("/number/<int:n>")
 def display_number(n):
-    """Returns only if n is an integer"""
-    return f"{n} is a number"
-
-
-@app.route("/number/<int:n>")
-def display_number(n):
-    """Returns a html page only if n is an integer"""
+    """Returns an HTML page only if n is an integer"""
     return render_template('5-number.html', n=n)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=5000)
+    app.run(host="0.0.0.0", debug=True)
