@@ -19,7 +19,7 @@ def hbnb():
 
 
 @app.route("/c/<text>")
-def cText(text):
+def display_text_c(text):
     """Returns a text"""
     text = text.replace("_", " ")
     return f"C {text}"
@@ -27,14 +27,14 @@ def cText(text):
 
 @app.route("/python")
 @app.route("/python/<text>")
-def pythonText(text="is cool"):
+def display_text_python(text):
     """Returns a text"""
     text = text.replace("_", " ")
     return f"Python {text}"
 
 
 @app.route("/number/<int:n>")
-def number(n):
+def display_number(n):
     """Returns only if n is an integer"""
     return f"{n} is a number"
 
