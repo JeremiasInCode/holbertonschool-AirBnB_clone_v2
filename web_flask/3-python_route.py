@@ -18,15 +18,15 @@ def hbnb():
 
 
 @app.route("/c/<text>", strict_slashes=False)
-def display_text(text):
+def display_text_c(text):
     """ Displays 'C' <text> """
     text_replaced = text.replace("_", " ")
     return "C " + text_replaced
 
 
-@app.route("/python")
+@app.route("/python", defaults={'text': 'is_cool'})
 @app.route("/python/<text>")
-def display_text(text="is cool"):
+def display_text_python(text):
     """ Returns a text """
     text = text.replace("_", " ")
     return "Python " + text
