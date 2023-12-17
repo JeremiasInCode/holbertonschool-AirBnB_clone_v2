@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""List of states"""
+"""Starts a Flask web application.
+"""
 from flask import Flask, render_template
-
 from models import storage
 from models.state import State
 
@@ -9,24 +9,14 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def app_teardown_appcontext(self):
-    "Close the session after each request"
+def teardown(e):
     storage.close()
 
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
-    """ List  7-states_list.html """
-    return render_template("7-states_list.html",
-                           states=storage.all(State).values())
-
-
-@app.route("/python", strict_slashes=False)
-@app.route("/python/<text>", strict_slashes=False)
-def display_text(text="is cool"):
-    """ Returns a text """
-    text = text.replace("_", " ")
-    return "Python " + text
+    states = storage.all(State)
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
