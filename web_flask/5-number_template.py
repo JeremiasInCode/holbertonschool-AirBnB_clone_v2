@@ -1,43 +1,45 @@
 #!/usr/bin/python3
-"""Starts a Flask web app"""
-from flask import Flask, render_template
+""" script that starts a Flask web application
+    python3 -m web_flask.5-number_template
+"""
+from flask import Flask
+from flask import render_template
+
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
-@app.route("/")
-def hello_world():
-    """Displays 'Hello HBNB!'"""
+@app.route("/", strict_slashes=False)
+def route_index():
     return "Hello HBNB!"
 
 
-@app.route("/hbnb")
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """Displays 'HBNB!'"""
     return "HBNB"
 
 
-@app.route("/c/<text>")
+@app.route("/c/<text>", strict_slashes=False)
 def display_text_c(text):
-    """Returns a text"""
-    text = text.replace("_", " ")
-    return f"C {text}"
+    return "C {}".format(text.replace("_", " "))
 
 
-@app.route("/python")
-@app.route("/python/<text>")
-def display_text_python(text="is cool"):
-    """Returns a text"""
-    text = text.replace("_", " ")
-    return f"Python {text}"
+@app.route("/python", defaults={"text": "is cool"}, strict_slashes=False)
+@app.route("/python/", defaults={"text": "is cool"}, strict_slashes=False)
+@app.route("/python/<text>", strict_slashes=False)
+def display_text_python(text):
+    return "Python {}".format(text.replace("_", " "))
 
 
-@app.route("/number/<int:n>")
-def display_number(n):
-    """Returns an HTML page only if n is an integer"""
-    return render_template('5-number.html', n=n)
+@app.route("/number/<int:n>", strict_slashes=False)
+def route_number(n):
+    return "{:d} is a number".format(n)
+
+
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def route_HTML(n):
+    return render_template("5-number.html", n=n)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host='0.0.0.0', port=5000)
