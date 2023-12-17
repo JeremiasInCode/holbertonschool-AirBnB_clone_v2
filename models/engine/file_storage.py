@@ -63,3 +63,6 @@ class FileStorage:
         if obj is not None:
             k = obj.__class__.__name__ + "." + obj.id
             FileStorage.__objects.pop(k, None)
+
+    def close(self):
+        self.reload()
