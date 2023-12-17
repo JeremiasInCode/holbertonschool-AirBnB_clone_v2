@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""Starts a Flask web application.
+"""
+Starts a Flask web application.
+
+This module contains a Flask web application that displays a list of states.
 """
 from models import storage
 from models.state import State
