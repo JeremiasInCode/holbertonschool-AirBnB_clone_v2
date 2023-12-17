@@ -65,4 +65,5 @@ class FileStorage:
             FileStorage.__objects.pop(k, None)
 
     def close(self):
+        """delete obj from __objects if its inside"""
         self.reload()
